@@ -2220,6 +2220,74 @@ html.rm *::after {
   pointer-events: none;
 }
 
+#testControls {
+  position: fixed;
+  right: max(12px, env(safe-area-inset-right, 0px));
+  bottom: max(12px, env(safe-area-inset-bottom, 0px));
+  z-index: 100001;
+  color: var(--ink);
+  font-family: var(--mono);
+}
+#testToggle,
+#testPanel {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(5, 10, 28, 0.96);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+}
+#testToggle {
+  display: block;
+  margin-left: auto;
+  padding: 10px 14px;
+  color: var(--cy2);
+  font: 600 0.85rem var(--mono);
+  cursor: pointer;
+}
+#testPanel {
+  position: absolute;
+  right: 0;
+  bottom: 52px;
+  width: min(320px, calc(100vw - 24px));
+  max-height: min(76vh, 560px);
+  overflow: auto;
+  padding: 14px;
+}
+.testPanelHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+  color: var(--cy2);
+}
+#testClose {
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font: 1.4rem/1 var(--body);
+  cursor: pointer;
+}
+#testChoices {
+  display: grid;
+  gap: 7px;
+}
+#testChoices button {
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--ink);
+  font: 0.78rem var(--body);
+  text-align: left;
+  cursor: pointer;
+}
+#testChoices button:hover,
+#testChoices button:focus-visible {
+  border-color: var(--cy);
+  background: rgba(53, 243, 255, 0.12);
+}
+
 /* Chỉ hiện thông báo nếu JavaScript không khởi chạy; tự ẩn khi ứng dụng chạy bình thường. */
 #ios-open-help {
   position: fixed;

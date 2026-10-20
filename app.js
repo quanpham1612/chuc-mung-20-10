@@ -5,11 +5,11 @@
    =================================================================== */
 const CONFIG = {
   bot: "Pi",
-  from: "HieuPahm",
+  from: "QuanPham",
   to: "Cậu",
   facebook: {
-    label: "Facebook @ssociu208",
-    url: "https://www.facebook.com/ssociu208",
+    label: "Facebook @quanpham115",
+    url: "https://www.facebook.com/quanpham115",
   },
   music: {
     src: "music.mp3",
@@ -20,7 +20,7 @@ const CONFIG = {
     sub: "DÀNH RIÊNG CHO",
     name: "CẬU" /* tên hiện to dạng chữ viết tay */,
     notif: "Bạn có 1 tin nhắn mới từ {from}",
-    hint: "Ngày kỷ niệm của tụi mình? (Không nhớ là dỗi nha)",
+    hint: "Ngày sinh nhật của mình? (Không nhớ là dỗi nha)",
     wrong: "Chưa đúng rồi, nghĩ lại xem nào~",
     right: "Đúng rồi! Mở khóa thôi...",
   },
@@ -110,7 +110,7 @@ const CONFIG = {
     ],
     yes: "Yeah! tớ biết {to} tốt bụng nhất mà",
     plane: [
-      "Việc nhỏ xíu đó là: giúp tớ gửi trang web này cho mọi người nhé",
+      "Việc nhỏ xíu đó là: giúp tớ fix back trang web này nha",
       "{to} bấm nút bên dưới để thả máy bay giấy đi nha",
     ],
     afterPlane: "Máy bay cất cánh rồi! cảm ơn {to} nhiều lắm luôn á",
@@ -124,7 +124,7 @@ const CONFIG = {
       "Bíp bíp!",
       "Bíp bíp bíp! Cậu làm cậu ấy vui lên rồi,cảm ơn nhé",
     ],
-    go: "Đi thôi! chào mừng {to} đến cửa hàng của *{from}*",
+    go: "Đi thôi! chào mừng {to} đến Câu hỏi của *{from}*",
   },
   final: {
     qTitle: "Pi có 10 câu hỏi nhỏ cho {to}",
@@ -165,8 +165,7 @@ const CONFIG = {
     note: "Mỗi bên chỉ có đúng một món, và Pi không được phép tiết lộ bên trong có gì đâu nha.",
     contactHow:
       "Chọn món rồi nhắn cho mình qua kênh dưới đây, kèm tên món và số lượng nhé.",
-    contactValue: "Facebook: Minh Trang",
-    contactUrl: "https://www.facebook.com/ssociu208",
+    contactValue: "Facebook: {from}",
     /* art: surprise | surprise2 | keychain | headband | card | candle | giftbox | notebook | tote ; tint: màu nền ảnh ; desc: mô tả dễ thương */
     groups: [
       {
@@ -202,7 +201,7 @@ const CONFIG = {
     ],
     footTitle: "Cảm ơn {to} đã ủng hộ",
     footText:
-      "Mỗi đơn hàng giúp {from} có thêm kinh phí để làm tiếp những điều dễ thương.",
+      "",
   },
 };
 /* ===================== HẾT PHẦN CẤU HÌNH ===================== */
@@ -1591,12 +1590,10 @@ function openBuy(it) {
   $("#dlgName").textContent = it.name;
   $("#dlgPrice").textContent = it.price;
   $("#dlgHow").textContent = F(SH.contactHow);
-  $("#dlgContact").value = SH.contactValue;
+  $("#dlgContact").value = F(SH.contactValue);
   const l = $("#dlgLink");
-  if (SH.contactUrl) {
-    l.href = SH.contactUrl;
-    l.hidden = false;
-  } else l.hidden = true;
+  l.href = CONFIG.facebook.url;
+  l.hidden = !CONFIG.facebook.url;
   overlay.hidden = false;
   $("#dlgClose").focus();
   const r = overlay.getBoundingClientRect();
@@ -2567,6 +2564,67 @@ async function runPre(id) {
 
 /* ---------- Chạy ---------- */
 const SCENES = [s0, s1, s2, s3, s4, s5, s6, s7];
+const testMode = new URLSearchParams(location.search).get("test") === "1";
+const testControls = $("#testControls");
+const testToggle = $("#testToggle");
+const testPanel = $("#testPanel");
+if (testMode) {
+  testControls.hidden = false;
+  const choices = [
+    "Màn 1 — Đánh thức Pi",
+    "Màn 2 — Bắt trái tim",
+    "Màn 3 — Trồng hoa",
+    "Màn 4 — Điều ước",
+    "Màn 5 — Cỏ bốn lá",
+    "Màn 6 — Câu hỏi",
+    "Màn 7 — Máy bay giấy",
+    "Màn 8 — Chú xe nhỏ",
+    "Gian hàng",
+  ];
+  choices.forEach((label, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.dataset.testRun = index < SCENES.length ? String(index) : "shop";
+    button.textContent = label;
+    $("#testChoices").appendChild(button);
+  });
+}
+testToggle.addEventListener("click", () => {
+  testPanel.hidden = !testPanel.hidden;
+  testToggle.setAttribute("aria-expanded", String(!testPanel.hidden));
+});
+$("#testClose").addEventListener("click", () => {
+  testPanel.hidden = true;
+  testToggle.setAttribute("aria-expanded", "false");
+  testToggle.focus();
+});
+$("#testChoices").addEventListener("click", async (event) => {
+  const button = event.target.closest("button[data-test-run]");
+  if (!button) return;
+
+  testPanel.hidden = true;
+  testToggle.setAttribute("aria-expanded", "false");
+  const target = button.dataset.testRun;
+  if (target === "shop") {
+    RUN++;
+    reset();
+    PRE.style.display = "none";
+    await enterShop();
+    return;
+  }
+
+  const sceneIndex = Number(target);
+  if (!Number.isInteger(sceneIndex) || !SCENES[sceneIndex]) return;
+  const id = ++RUN;
+  reset();
+  PRE.style.display = "none";
+  try {
+    await SCENES[sceneIndex](id);
+    guard(id);
+  } catch (e) {
+    if (e !== ABORT) console.error(e);
+  }
+});
 async function start(replay) {
   const id = ++RUN;
   reset();
@@ -2601,7 +2659,10 @@ $("#replayBtn").addEventListener("click", () => {
   start(true);
 });
 requestAnimationFrame(frame);
-start();
+if (testMode) {
+  reset();
+  PRE.style.display = "none";
+} else start();
 document.documentElement.classList.add("js-ready");
 
 /* ---------- Trả lời trực tiếp: người gửi và người trả lời cùng đọc được ---------- */
@@ -2626,6 +2687,7 @@ document.documentElement.classList.add("js-ready");
     NQ = CONFIG.final.questions.length,
     st = { a: {}, p: {}, g: null },
     tm = {};
+  $("#sendTitle").textContent = F($("#sendTitle").textContent);
   let db = null,
     owner = false,
     okW = true,
@@ -2719,7 +2781,7 @@ document.documentElement.classList.add("js-ready");
           : "🌙 " + TO + " chưa viết gì cả, " + FROM + " vẫn đang đợi nè...";
     else if (!db || !okW)
       bar.textContent =
-        "💌 Trang chưa gửi trực tiếp được, " +
+        " " +
         TO +
         " share lại cho người gửi sau khi đã điền xong hoặc dùng phần sao chép ở cuối trang nhé";
     else
