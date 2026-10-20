@@ -53,7 +53,7 @@ const CONFIG = {
       "Ơ... có ai ở đó không vậy?",
       "À, là {to} hả! Chào {to} nha",
       "Tớ là *{bot}*, bé robot nhỏ xíu sống trong trang web này nè",
-      "{to} thử đưa chuột đến mắt tớ xem, tớ không giận đâu~",
+      "{to} thử chạm vào mắt tớ xem, tớ không giận đâu~",
     ],
     pokes: [
       "Á! nhột quá nha",
@@ -71,7 +71,7 @@ const CONFIG = {
     ],
     afterHearts: "Giỏi quá! {to} bắt hết rồi, tim tớ ấm hẳn lên",
     field: [
-      "À mà... sắp *20/10* rồi đó",
+      "À mà... hôm nay ngày *20/10* rồi đó",
       "Tớ chạy ra đồng cỏ hái hoa tặng {to} nè",
       "{to} chạm vào đồng cỏ để trồng giúp tớ ba bông hoa nha",
     ],
@@ -154,54 +154,12 @@ const CONFIG = {
     pNote:
       "Thêm ảnh của {to} vào các ô trống bên dưới, ảnh sẽ bay vòng quanh hành tinh. Chạm vào ảnh đang bay để xem to, hoặc chạm vào khung trống để chọn ảnh.",
     pPriv:
-      "Ảnh {to} thêm vào sẽ hiện ngay cho cả {to} và {from} cùng xem, không cần bấm gửi gì cả. Chạm ảnh đang bay để xem to.",
-    sendNote:
-      "Mọi câu trả lời, ảnh và món quà {to} chọn đều được lưu trực tiếp, {from} mở trang là đọc được.",
+      "Ảnh của cậu chỉ có thể cậu thấy thôi hoặc niếu muốn thì gửi facebook cho tôi hehe",
+    sendNote: "",
     slots: 8,
     maxSlots: 14,
-  },
-  shop: {
-    title: "Phần quà *bất ngờ*",
-    note: "Mỗi bên chỉ có đúng một món, và Pi không được phép tiết lộ bên trong có gì đâu nha.",
-    contactHow:
-      "Chọn món rồi nhắn cho mình qua kênh dưới đây, kèm tên món và số lượng nhé.",
-    contactValue: "Facebook: {from}",
-    /* art: surprise | surprise2 | keychain | headband | card | candle | giftbox | notebook | tote ; tint: màu nền ảnh ; desc: mô tả dễ thương */
-    groups: [
-      {
-        name: "Dành cho nữ",
-        sub: "Một món thôi, nhưng là bất ngờ",
-        kind: "a",
-        items: [
-          {
-            name: "Hộp quà bất ngờ cho nữ",
-            price: "????",
-            note: "Mở ra mới biết~",
-            desc: "Hộp quà bí mật được Pi canh giữ cả đêm. Pi không nói bên trong có gì đâu, chỉ biết mở ra là cười toe toét liền!",
-            art: "surprise",
-            tint: "#f9c9dc",
-          },
-        ],
-      },
-      {
-        name: "Dành cho nam",
-        sub: "Một món thôi, nhưng là bất ngờ",
-        kind: "b",
-        items: [
-          {
-            name: "Hộp quà bất ngờ cho nam",
-            price: "????",
-            note: "Mở ra mới biết~",
-            desc: "Một bất ngờ nho nhỏ được gói thật kỹ. Pi đoán bạn sẽ giả vờ bình tĩnh được đúng ba giây rồi cười thôi à!",
-            art: "surprise2",
-            tint: "#c9efdc",
-          },
-        ],
-      },
-    ],
-    footTitle: "Cảm ơn {to} đã ủng hộ",
-    footText:
-      "",
+    footTitle: "Cảm ơn {to} đã xem hết",
+    footText: "",
   },
 };
 /* ===================== HẾT PHẦN CẤU HÌNH ===================== */
@@ -647,7 +605,7 @@ let tx = W / 2,
   lx = 0,
   ly = 0;
 const HIT =
-  "button,a,input,textarea,.item,.clover,.star-b,.heartbub,.rover,.stk-hit,.of,.pslot";
+  "button,a,input,textarea,.clover,.star-b,.heartbub,.rover,.stk-hit,.of,.pslot";
 if (fine) {
   addEventListener(
     "pointermove",
@@ -866,24 +824,6 @@ mBtn.addEventListener("click", (e) => {
 });
 mBtn.addEventListener("pointerdown", (e) => e.stopPropagation());
 
-const ART = {
-  keychain:
-    '<svg viewBox="0 0 160 120"><circle cx="80" cy="14" r="10" fill="none" stroke="var(--ink)" stroke-width="3"/><path d="M80 24v20" stroke="var(--ink)" stroke-width="3"/><g fill="var(--petal)"><circle cx="80" cy="56" r="14"/><circle cx="97" cy="69" r="14"/><circle cx="90" cy="89" r="14"/><circle cx="70" cy="89" r="14"/><circle cx="63" cy="69" r="14"/></g><circle cx="80" cy="76" r="12" fill="var(--face)"/><circle cx="76" cy="75" r="1.8" fill="var(--ink)"/><circle cx="84" cy="75" r="1.8" fill="var(--ink)"/></svg>',
-  headband:
-    '<svg viewBox="0 0 160 120"><path d="M16 96 Q80 -12 144 96" fill="none" stroke="var(--accent)" stroke-width="12" stroke-linecap="round"/><ellipse cx="62" cy="38" rx="20" ry="11" transform="rotate(-24 62 38)" fill="var(--petal)" stroke="var(--ink)" stroke-width="2.5"/><ellipse cx="98" cy="38" rx="20" ry="11" transform="rotate(24 98 38)" fill="var(--petal)" stroke="var(--ink)" stroke-width="2.5"/><circle cx="80" cy="40" r="8" fill="var(--face)" stroke="var(--ink)" stroke-width="2.5"/></svg>',
-  card: '<svg viewBox="0 0 160 120"><g transform="rotate(-6 80 60)"><rect x="42" y="12" width="76" height="96" rx="8" fill="var(--card)" stroke="var(--ink)" stroke-width="3"/><path d="M80 94 V52" stroke="var(--leaf)" stroke-width="3" stroke-linecap="round"/><path d="M80 78 Q66 72 64 62 Q76 62 80 78Z M80 70 Q94 64 96 54 Q84 54 80 70Z" fill="var(--leaf)"/><g fill="var(--petal)"><circle cx="80" cy="36" r="8"/><circle cx="90" cy="44" r="8"/><circle cx="70" cy="44" r="8"/></g><circle cx="80" cy="42" r="6" fill="var(--face)"/><rect x="56" y="98" width="48" height="3" rx="1.5" fill="var(--line)"/></g></svg>',
-  candle:
-    '<svg viewBox="0 0 160 120"><path d="M80 16 Q94 34 80 48 Q66 34 80 16Z" fill="var(--face)" stroke="var(--accent)" stroke-width="3" stroke-linejoin="round"/><path d="M80 48 V58" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/><rect x="48" y="58" width="64" height="52" rx="12" fill="var(--petal)" stroke="var(--ink)" stroke-width="3"/><rect x="48" y="78" width="64" height="18" fill="var(--card)" stroke="var(--ink)" stroke-width="3"/><circle cx="80" cy="87" r="4" fill="var(--accent)"/></svg>',
-  giftbox:
-    '<svg viewBox="0 0 160 120"><rect x="36" y="54" width="88" height="56" rx="6" fill="var(--accent)" stroke="var(--ink)" stroke-width="3"/><rect x="30" y="40" width="100" height="20" rx="6" fill="var(--petal)" stroke="var(--ink)" stroke-width="3"/><rect x="73" y="40" width="14" height="70" fill="var(--face)" stroke="var(--ink)" stroke-width="3"/><ellipse cx="64" cy="30" rx="18" ry="10" transform="rotate(-22 64 30)" fill="none" stroke="var(--ink)" stroke-width="3"/><ellipse cx="96" cy="30" rx="18" ry="10" transform="rotate(22 96 30)" fill="none" stroke="var(--ink)" stroke-width="3"/></svg>',
-  notebook:
-    '<svg viewBox="0 0 160 120"><g transform="rotate(5 80 60)"><rect x="44" y="10" width="72" height="100" rx="8" fill="var(--leaf)" stroke="var(--ink)" stroke-width="3"/><rect x="44" y="10" width="12" height="100" rx="6" fill="var(--ink)" opacity="0.28"/><rect x="64" y="30" width="44" height="30" rx="4" fill="var(--card)" stroke="var(--ink)" stroke-width="2.5"/><path d="M71 41h30M71 50h20" stroke="var(--line)" stroke-width="3" stroke-linecap="round"/><path d="M104 10 V110" stroke="var(--face)" stroke-width="5"/></g></svg>',
-  tote: '<svg viewBox="0 0 160 120"><path d="M58 46 Q58 12 80 12 Q102 12 102 46" fill="none" stroke="var(--ink)" stroke-width="4" stroke-linecap="round"/><rect x="34" y="44" width="92" height="68" rx="10" fill="var(--face)" stroke="var(--ink)" stroke-width="3"/><g fill="var(--petal)"><circle cx="80" cy="66" r="9"/><circle cx="91" cy="76" r="9"/><circle cx="85" cy="90" r="9"/><circle cx="75" cy="90" r="9"/><circle cx="69" cy="76" r="9"/></g><circle cx="80" cy="79" r="7" fill="var(--accent)"/></svg>',
-  surprise:
-    '<svg viewBox="0 0 160 120"><rect x="38" y="54" width="84" height="54" rx="8" fill="#ff6fb1" stroke="#3b1d3f" stroke-width="3"/><rect x="30" y="40" width="100" height="22" rx="8" fill="#ff9ccc" stroke="#3b1d3f" stroke-width="3"/><rect x="73" y="40" width="14" height="68" fill="#ffd66b" stroke="#3b1d3f" stroke-width="3"/><path d="M80 40 C60 8 34 22 56 38Z M80 40 C100 8 126 22 104 38Z" fill="#ffd66b" stroke="#3b1d3f" stroke-width="3" stroke-linejoin="round"/><text x="54" y="92" text-anchor="middle" font-family="Baloo 2,sans-serif" font-weight="800" font-size="26" fill="#fff">?</text><text x="106" y="92" text-anchor="middle" font-family="Baloo 2,sans-serif" font-weight="800" font-size="26" fill="#fff">?</text><path d="M140 14l3 8 8 3-8 3-3 8-3-8-8-3 8-3z" fill="#fff" stroke="#3b1d3f" stroke-width="2" stroke-linejoin="round"/><path d="M20 22l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#ffd66b" stroke="#3b1d3f" stroke-width="1.6" stroke-linejoin="round"/></svg>',
-  surprise2:
-    '<svg viewBox="0 0 160 120"><rect x="38" y="54" width="84" height="54" rx="8" fill="#3aa6c8" stroke="#1b2a55" stroke-width="3"/><rect x="30" y="40" width="100" height="22" rx="8" fill="#7fd3e8" stroke="#1b2a55" stroke-width="3"/><rect x="73" y="40" width="14" height="68" fill="#ffd66b" stroke="#1b2a55" stroke-width="3"/><path d="M80 40 C60 8 34 22 56 38Z M80 40 C100 8 126 22 104 38Z" fill="#ffd66b" stroke="#1b2a55" stroke-width="3" stroke-linejoin="round"/><text x="54" y="92" text-anchor="middle" font-family="Baloo 2,sans-serif" font-weight="800" font-size="26" fill="#fff">?</text><text x="106" y="92" text-anchor="middle" font-family="Baloo 2,sans-serif" font-weight="800" font-size="26" fill="#fff">?</text><path d="M140 14l3 8 8 3-8 3-3 8-3-8-8-3 8-3z" fill="#fff" stroke="#1b2a55" stroke-width="2" stroke-linejoin="round"/><path d="M20 22l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#ffd66b" stroke="#1b2a55" stroke-width="1.6" stroke-linejoin="round"/></svg>',
-};
 /* ---------- Đồng cỏ (canvas) ---------- */
 let grassOn = false,
   grassGrow = 0,
@@ -968,8 +908,8 @@ function reset() {
   bg("night");
   $("#stage").style.cssText = "";
   $("#stage").hidden = false;
-  $("#shop").hidden = true;
-  $("#shopBg").hidden = true;
+  $("#finalPage").hidden = true;
+  $("#finalBg").hidden = true;
   document.documentElement.classList.add("story");
   $("#skipBtn").classList.remove("show");
   dotsEl.querySelectorAll("i").forEach((d) => d.classList.remove("on", "now"));
@@ -1340,14 +1280,8 @@ async function s6(id) {
     "display:flex;gap:8px;width:100%;flex-wrap:wrap;justify-content:center";
   const inp = document.createElement("input");
   inp.readOnly = true;
-  inp.value = (function () {
-    try {
-      return location.href.split("#")[0];
-    } catch (e) {
-      return "";
-    }
-  })();
-  inp.setAttribute("aria-label", "Đường dẫn của trang");
+  inp.value = CONFIG.facebook.url;
+  inp.setAttribute("aria-label", "Liên kết Facebook cá nhân");
   inp.style.cssText =
     "flex:1;min-width:150px;max-width:300px;font:inherit;font-family:var(--mono);font-size:.85rem;color:var(--ink);background:rgba(255,255,255,.07);border:1.5px solid var(--line);border-radius:999px;padding:10px 16px";
   row.appendChild(inp);
@@ -1432,128 +1366,10 @@ async function s7(id) {
   await say(S.go);
   guard(id);
   going = false;
-  await enterShop();
+  await enterFinal();
 }
 
-/* ---------- Gian hàng ---------- */
-let shopBuilt = false;
-function hlText(el, t) {
-  el.textContent = "";
-  F(t)
-    .split("*")
-    .forEach((p, i) => {
-      if (!p) return;
-      if (i % 2) {
-        const s = document.createElement("span");
-        s.style.cssText = "color:var(--green)";
-        s.textContent = p;
-        el.appendChild(s);
-      } else el.appendChild(document.createTextNode(p));
-    });
-}
-function buildShop() {
-  if (shopBuilt) return;
-  shopBuilt = true;
-  const SH = CONFIG.shop,
-    cells = [];
-  hlText($("#shopTitle"), SH.title);
-  $("#shopNote").textContent = F(SH.note);
-  const host = $("#panels");
-  SH.groups.forEach((g) => {
-    const p = document.createElement("section");
-    p.className = "panel " + (g.kind || "a");
-    p.innerHTML = '<div class="flags">' + "<i></i>".repeat(9) + "</div>";
-    const h = document.createElement("h3");
-    h.textContent = F(g.name);
-    const sub = document.createElement("div");
-    sub.className = "sub";
-    sub.textContent = F(g.sub || "");
-    p.appendChild(h);
-    p.appendChild(sub);
-    const grid = document.createElement("div");
-    grid.className = "grid" + (g.items.length === 1 ? " single" : "");
-    g.items.forEach((it, k) => {
-      const cell = document.createElement("div");
-      cell.className = "cell";
-      cell.style.setProperty("--d", (k % 4) * 0.09 + "s");
-      const c = document.createElement("div");
-      c.className = "item";
-      const art = document.createElement("div");
-      art.className = "art";
-      art.style.setProperty("--tint", it.tint || "#f9c9dc");
-      art.innerHTML = ART[it.art] || ART.giftbox;
-      const info = document.createElement("div");
-      info.className = "info";
-      info.innerHTML =
-        '<div class="nm"></div><div class="nt"></div><div class="pr"></div>';
-      info.children[0].textContent = it.name;
-      info.children[1].textContent = it.note || "";
-      info.children[2].textContent = it.price;
-      if (it.desc) {
-        const d = document.createElement("p");
-        d.className = "ds";
-        d.textContent = F(it.desc);
-        info.insertBefore(d, info.children[2]);
-      }
-      const btn = document.createElement("button");
-      btn.className = "btn";
-      btn.textContent = "Chọn món";
-      btn.addEventListener("click", () => {
-        chooseGift(it, g);
-        openBuy(it);
-      });
-      info.appendChild(btn);
-      c.appendChild(art);
-      c.appendChild(info);
-      cell.appendChild(c);
-      grid.appendChild(cell);
-      cells.push(cell);
-      if (fine && !reduce) {
-        c.addEventListener("pointermove", (e) => {
-          const r = c.getBoundingClientRect(),
-            x = (e.clientX - r.left) / r.width - 0.5,
-            y = (e.clientY - r.top) / r.height - 0.5;
-          c.style.transform =
-            "perspective(700px) rotateY(" +
-            (x * 10).toFixed(1) +
-            "deg) rotateX(" +
-            (-y * 10).toFixed(1) +
-            "deg) translateY(-4px)";
-        });
-        c.addEventListener("pointerleave", () => {
-          c.style.transform = "";
-        });
-      }
-    });
-    p.appendChild(grid);
-    host.appendChild(p);
-  });
-  $("#footTitle").textContent = FF(SH.footTitle);
-  $("#footText").textContent = FF(SH.footText);
-  const fl = $("#footLink");
-  fl.textContent = "";
-  const a = document.createElement("a");
-  a.href = CONFIG.facebook.url;
-  a.target = "_blank";
-  a.rel = "noopener";
-  a.textContent = CONFIG.facebook.label;
-  fl.appendChild(a);
-  if ("IntersectionObserver" in window) {
-    const io = new IntersectionObserver(
-      (es) =>
-        es.forEach((en) => {
-          if (en.isIntersecting) {
-            en.target.classList.add("in");
-            io.unobserve(en.target);
-          }
-        }),
-      { threshold: 0.1 },
-    );
-    cells.forEach((c) => io.observe(c));
-  }
-  setTimeout(() => cells.forEach((c) => c.classList.add("in")), 1800);
-}
-async function enterShop() {
+async function enterFinal() {
   const st = $("#stage");
   st.style.transition = "opacity .8s ease";
   st.style.opacity = "0";
@@ -1562,57 +1378,12 @@ async function enterShop() {
   document.documentElement.classList.remove("story");
   setAmbient("none");
   grass(false);
-  $("#shopBg").hidden = false;
-  $("#shop").hidden = false;
-  buildShop();
+  $("#finalBg").hidden = false;
+  $("#finalPage").hidden = false;
   buildFinal();
   window.scrollTo(0, 0);
   burst(W / 2, H * 0.2, 30, ["cy", "pink", "gold"], 1);
 }
-const overlay = $("#overlay");
-let lastFocus = null;
-let chosenGift = null;
-try {
-  chosenGift = JSON.parse(localStorage.getItem("pi2010_gift") || "null");
-} catch (e) {}
-function chooseGift(it, g) {
-  chosenGift = { name: it.name, group: g && g.name ? g.name : "" };
-  try {
-    localStorage.setItem("pi2010_gift", JSON.stringify(chosenGift));
-  } catch (e) {}
-  toast("Pi đã ghi nhớ món cậu chọn rồi nha");
-  if (window.__sync) __sync.gift(chosenGift);
-  if (window.__sendRefresh) window.__sendRefresh();
-}
-function openBuy(it) {
-  const SH = CONFIG.shop;
-  lastFocus = document.activeElement;
-  $("#dlgName").textContent = it.name;
-  $("#dlgPrice").textContent = it.price;
-  $("#dlgHow").textContent = F(SH.contactHow);
-  $("#dlgContact").value = F(SH.contactValue);
-  const l = $("#dlgLink");
-  l.href = CONFIG.facebook.url;
-  l.hidden = !CONFIG.facebook.url;
-  overlay.hidden = false;
-  $("#dlgClose").focus();
-  const r = overlay.getBoundingClientRect();
-  sticker(W / 2, H / 2, "heart");
-  burst(W / 2, H / 2, 22, ["pink", "gold", "cy"], 1);
-}
-function closeBuy() {
-  overlay.hidden = true;
-  if (lastFocus && lastFocus.focus) lastFocus.focus();
-}
-$("#dlgClose").addEventListener("click", closeBuy);
-$("#dlgCopy").addEventListener("click", () => copyFrom($("#dlgContact")));
-overlay.addEventListener("click", (e) => {
-  if (e.target === overlay) closeBuy();
-});
-addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && !overlay.hidden) closeBuy();
-});
-
 /* ---------- Phần cuối: câu hỏi nhỏ + hành tinh ảnh ---------- */
 let finalBuilt = false;
 /* {to} đứng đầu câu thì viết hoa như cấu hình, đứng giữa câu thì viết thường */
@@ -1644,6 +1415,16 @@ function buildFinal() {
   if (finalBuilt) return;
   finalBuilt = true;
   const FN = CONFIG.final;
+  $("#footTitle").textContent = FF(FN.footTitle);
+  $("#footText").textContent = FF(FN.footText);
+  const fl = $("#footLink");
+  fl.textContent = "";
+  const a = document.createElement("a");
+  a.href = CONFIG.facebook.url;
+  a.target = "_blank";
+  a.rel = "noopener";
+  a.textContent = CONFIG.facebook.label;
+  fl.appendChild(a);
   /* --- 10 câu hỏi --- */
   $("#qTitle").textContent = FF(FN.qTitle);
   $("#qNote").textContent = FF(FN.qNote);
@@ -2564,74 +2345,13 @@ async function runPre(id) {
 
 /* ---------- Chạy ---------- */
 const SCENES = [s0, s1, s2, s3, s4, s5, s6, s7];
-const testMode = new URLSearchParams(location.search).get("test") === "1";
-const testControls = $("#testControls");
-const testToggle = $("#testToggle");
-const testPanel = $("#testPanel");
-if (testMode) {
-  testControls.hidden = false;
-  const choices = [
-    "Màn 1 — Đánh thức Pi",
-    "Màn 2 — Bắt trái tim",
-    "Màn 3 — Trồng hoa",
-    "Màn 4 — Điều ước",
-    "Màn 5 — Cỏ bốn lá",
-    "Màn 6 — Câu hỏi",
-    "Màn 7 — Máy bay giấy",
-    "Màn 8 — Chú xe nhỏ",
-    "Gian hàng",
-  ];
-  choices.forEach((label, index) => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.dataset.testRun = index < SCENES.length ? String(index) : "shop";
-    button.textContent = label;
-    $("#testChoices").appendChild(button);
-  });
-}
-testToggle.addEventListener("click", () => {
-  testPanel.hidden = !testPanel.hidden;
-  testToggle.setAttribute("aria-expanded", String(!testPanel.hidden));
-});
-$("#testClose").addEventListener("click", () => {
-  testPanel.hidden = true;
-  testToggle.setAttribute("aria-expanded", "false");
-  testToggle.focus();
-});
-$("#testChoices").addEventListener("click", async (event) => {
-  const button = event.target.closest("button[data-test-run]");
-  if (!button) return;
-
-  testPanel.hidden = true;
-  testToggle.setAttribute("aria-expanded", "false");
-  const target = button.dataset.testRun;
-  if (target === "shop") {
-    RUN++;
-    reset();
-    PRE.style.display = "none";
-    await enterShop();
-    return;
-  }
-
-  const sceneIndex = Number(target);
-  if (!Number.isInteger(sceneIndex) || !SCENES[sceneIndex]) return;
-  const id = ++RUN;
-  reset();
-  PRE.style.display = "none";
-  try {
-    await SCENES[sceneIndex](id);
-    guard(id);
-  } catch (e) {
-    if (e !== ABORT) console.error(e);
-  }
-});
 async function start(replay) {
   const id = ++RUN;
   reset();
   try {
     if (replay) PRE.style.display = "none";
     else if ((await runPre(id)) === "skip") {
-      await enterShop();
+      await enterFinal();
       return;
     }
     guard(id);
@@ -2649,20 +2369,15 @@ $("#skipBtn").addEventListener("click", async (e) => {
   actClear();
   decoClear();
   lineEl.textContent = "";
-  await enterShop();
+  await enterFinal();
 });
 $("#skipBtn").addEventListener("pointerdown", (e) => e.stopPropagation());
 $("#replayBtn").addEventListener("click", () => {
-  $("#panels").textContent = "";
-  shopBuilt = false;
   window.scrollTo(0, 0);
   start(true);
 });
 requestAnimationFrame(frame);
-if (testMode) {
-  reset();
-  PRE.style.display = "none";
-} else start();
+start();
 document.documentElement.classList.add("js-ready");
 
 /* ---------- Trả lời trực tiếp: người gửi và người trả lời cùng đọc được ---------- */
@@ -2685,7 +2400,7 @@ document.documentElement.classList.add("js-ready");
     TO = CONFIG.to,
     bar = $("#liveBar"),
     NQ = CONFIG.final.questions.length,
-    st = { a: {}, p: {}, g: null },
+    st = { a: {}, p: {} },
     tm = {};
   $("#sendTitle").textContent = F($("#sendTitle").textContent);
   let db = null,
@@ -2704,11 +2419,7 @@ document.documentElement.classList.add("js-ready");
   };
   function summary() {
     const sv = (window.__qSaved && __qSaved()) || {},
-      L = [
-        "Tin nhắn gửi " + FROM + " từ " + TO,
-        "Món quà đã chọn: " + (chosenGift ? chosenGift.name : "chưa chọn"),
-        "",
-      ];
+      L = ["Tin nhắn gửi " + FROM + " từ " + TO, ""];
     CONFIG.final.questions.forEach((x, i) => {
       const a = sv[i] || {};
       L.push("Câu hỏi " + (i + 1) + ": " + FF(x.q));
@@ -2760,11 +2471,10 @@ document.documentElement.classList.add("js-ready");
   });
   function paint() {
     const n = Object.values(st.a).filter((x) => x && (x.a || "").trim()).length,
-      p = Object.keys(st.p).length,
-      g = st.g && st.g.name ? ", món quà đã chọn: " + st.g.name : "";
+      p = Object.keys(st.p).length;
     if (owner)
       bar.textContent =
-        n || p || g
+        n || p
           ? "💌 " +
             TO +
             " vừa trả lời " +
@@ -2774,7 +2484,6 @@ document.documentElement.classList.add("js-ready");
             " câu hỏi, gửi " +
             p +
             " tấm ảnh" +
-            g +
             ". " +
             FROM +
             " đọc được hết rồi nè"
@@ -2783,7 +2492,7 @@ document.documentElement.classList.add("js-ready");
       bar.textContent =
         " " +
         TO +
-        " share lại cho người gửi sau khi đã điền xong hoặc dùng phần sao chép ở cuối trang nhé";
+        " gửi mình câu trả lời cho mình sau khi đã điền xong bằng cách dùng phần sao chép ở cuối trang nhé rồi nhắn facebook cho mình, hoặc gửi ảnh qua tin nhắn. Mình sẽ đọc được ngay.";
     else
       bar.textContent =
         "💗 Những gì " +
@@ -2871,9 +2580,6 @@ document.documentElement.classList.add("js-ready");
     unphoto(i) {
       if (db && okW && !owner) q(() => db.doc("ph/p" + i).delete());
     },
-    gift(g) {
-      if (db && okW && !owner) q(() => db.doc("meta/gift").set(g));
-    },
   };
   window.__whoP = (async () => {
     try {
@@ -2948,13 +2654,6 @@ document.documentElement.classList.add("js-ready");
         delete st.p[v.i];
       },
       () => "📷 " + TO + " vừa thêm một tấm ảnh",
-    );
-    db.doc("meta/gift").onSnapshot(
-      (d) => {
-        st.g = d.exists ? d.data() : null;
-        paint();
-      },
-      () => {},
     );
     paint();
   });

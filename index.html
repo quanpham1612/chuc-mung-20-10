@@ -77,35 +77,15 @@
         >
           Hiệu ứng: bật
         </button>
-        <button class="skip" id="skipBtn">Bỏ qua, xem gian hàng ›</button>
+        <button class="skip" id="skipBtn">Bỏ qua ›</button>
       </div>
     </div>
 
-    <div id="testControls" hidden>
-      <button
-        id="testToggle"
-        type="button"
-        aria-expanded="false"
-        aria-controls="testPanel"
-      >
-        🧪 Test màn
-      </button>
-      <section id="testPanel" hidden aria-label="Chọn màn để kiểm thử">
-        <div class="testPanelHead">
-          <strong>Chọn màn để kiểm thử</strong>
-          <button id="testClose" type="button" aria-label="Đóng bảng kiểm thử">
-            ×
-          </button>
-        </div>
-        <div id="testChoices"></div>
-      </section>
-    </div>
-
-    <div class="shop-bg" id="shopBg" hidden aria-hidden="true"></div>
-    <main id="shop" hidden>
+    <div class="final-bg" id="finalBg" hidden aria-hidden="true"></div>
+    <main id="finalPage" hidden>
       <div class="live" id="liveBar" role="status">💗 Đang kết nối...</div>
       <section class="fin" id="qSec">
-        <div class="shop-top">
+        <div class="section-top">
           <div class="mini-eyes" aria-hidden="true"><i></i><i></i></div>
           <h2 id="qTitle"></h2>
           <p id="qNote"></p>
@@ -115,7 +95,7 @@
       </section>
 
       <section class="fin" id="pSec">
-        <div class="shop-top">
+        <div class="section-top">
           <h2 id="pTitle"></h2>
           <p id="pNote"></p>
         </div>
@@ -135,16 +115,8 @@
         <input type="file" id="photoInput" accept="image/*" multiple hidden />
       </section>
 
-      <section class="fin" id="shopSec">
-        <div class="shop-top">
-          <h2 id="shopTitle"></h2>
-          <p id="shopNote"></p>
-        </div>
-        <div class="panels" id="panels"></div>
-      </section>
-
       <section class="fin" id="sendSec">
-        <div class="shop-top">
+        <div class="section-top">
           <h2 id="sendTitle">Tự động gửi cho {from} 💌</h2>
           <p id="sendNote"></p>
         </div>
@@ -199,30 +171,6 @@
           stroke-linejoin="round"
         />
       </svg>
-    </div>
-    <div class="overlay" id="overlay" hidden>
-      <div
-        class="dialog"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="dlgName"
-      >
-        <h3 id="dlgName"></h3>
-        <div class="pr" id="dlgPrice"></div>
-        <p class="how" id="dlgHow"></p>
-        <div class="row">
-          <input
-            id="dlgContact"
-            type="text"
-            readonly
-            aria-label="Cách liên hệ để đặt hàng"
-          /><button class="btn" id="dlgCopy">Sao chép</button>
-        </div>
-        <a id="dlgLink" href="#" target="_blank" rel="noopener" hidden
-          >Mở trang liên hệ</a
-        >
-        <button class="btn pink" id="dlgClose">Đóng</button>
-      </div>
     </div>
     <div class="overlay" id="lightbox" hidden>
       <div class="lb">
