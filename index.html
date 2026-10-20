@@ -1,0 +1,221 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf8" />
+    <title>Pi thức dậy</title>
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+
+    <meta name="claude:viewport-fit-sides" content="cover" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Baloo+2:wght@500;700;800&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@500;600;800&display=swap"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="ios-open-help">
+      <strong>Trang cần JavaScript để hoạt động</strong>
+      Bản xem trước trong ứng dụng Tệp trên iPhone/iPad có thể không chạy được
+      phần tương tác của trang này. Nội dung và chức năng gốc vẫn được giữ
+      nguyên trong file. Để dùng đầy đủ, hãy mở trang qua Safari từ một địa chỉ
+      HTTPS (đăng tải file HTML lên dịch vụ lưu trữ web trước); chỉ đổi CSS hoặc
+      đổi tên file sẽ không khắc phục được nếu bản xem trước chặn JavaScript.
+    </div>
+    <div id="pre"></div>
+    <div id="stage" aria-live="off">
+      <div class="bgs" aria-hidden="true">
+        <div class="bg on" data-b="night"></div>
+        <div class="bg" data-b="pink"></div>
+        <div class="bg" data-b="field"></div>
+        <div class="bg" data-b="stars"></div>
+        <div class="bg" data-b="green"></div>
+        <div class="bg" data-b="blue"></div>
+        <div class="bg" data-b="plane"></div>
+        <div class="bg" data-b="planet"></div>
+      </div>
+      <canvas id="grass" aria-hidden="true"></canvas>
+      <canvas id="fx" aria-hidden="true"></canvas>
+      <div id="deco"></div>
+
+      <div class="col">
+        <div
+          id="bot"
+          class="hide m-hide"
+          role="img"
+          aria-label="Pi, chú robot có hai con mắt phát sáng"
+        >
+          <div class="botin">
+            <div class="eye">
+              <div class="sq"></div>
+              <div class="gl">&gt;</div>
+              <span class="blush">////</span>
+            </div>
+            <div class="eye">
+              <div class="sq"></div>
+              <div class="gl">&lt;</div>
+              <span class="blush">////</span>
+            </div>
+          </div>
+        </div>
+        <p id="line" aria-live="polite"></p>
+        <div id="act"></div>
+      </div>
+
+      <div class="hud">
+        <div class="dots" id="dots" aria-hidden="true"></div>
+        <button class="music" id="musicBtn" aria-label="Bật hoặc tắt nhạc nền">
+          <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span
+          ><span class="lbl">Nhạc</span>
+        </button>
+        <button
+          class="fxbtn"
+          id="fxBtn"
+          aria-label="Bật hoặc tắt hiệu ứng chuyển động"
+        >
+          Hiệu ứng: bật
+        </button>
+        <button class="skip" id="skipBtn">Bỏ qua, xem gian hàng ›</button>
+      </div>
+    </div>
+
+    <div class="shop-bg" id="shopBg" hidden aria-hidden="true"></div>
+    <main id="shop" hidden>
+      <div class="live" id="liveBar" role="status">💗 Đang kết nối...</div>
+      <section class="fin" id="qSec">
+        <div class="shop-top">
+          <div class="mini-eyes" aria-hidden="true"><i></i><i></i></div>
+          <h2 id="qTitle"></h2>
+          <p id="qNote"></p>
+          <span class="qcount" id="qCount"></span>
+        </div>
+        <div class="qgrid" id="qgrid"></div>
+      </section>
+
+      <section class="fin" id="pSec">
+        <div class="shop-top">
+          <h2 id="pTitle"></h2>
+          <p id="pNote"></p>
+        </div>
+        <div class="orbit" id="orbit">
+          <div class="orbit-ring" id="orbRing" aria-hidden="true"></div>
+          <div class="orb" id="orb" aria-hidden="true">
+            <div class="orb-clouds"></div>
+          </div>
+        </div>
+        <div class="ptools">
+          <button class="btn" id="addPhotos">Chọn ảnh từ máy</button>
+          <button class="btn ghost" id="addSlot">Thêm ô trống</button>
+          <button class="btn pink" id="clearPhotos">Xóa ảnh của mình</button>
+        </div>
+        <div class="slots" id="slots"></div>
+        <p class="pnote" id="pPriv"></p>
+        <input type="file" id="photoInput" accept="image/*" multiple hidden />
+      </section>
+
+      <section class="fin" id="shopSec">
+        <div class="shop-top">
+          <h2 id="shopTitle"></h2>
+          <p id="shopNote"></p>
+        </div>
+        <div class="panels" id="panels"></div>
+      </section>
+
+      <section class="fin" id="sendSec">
+        <div class="shop-top">
+          <h2 id="sendTitle">Tự động gửi cho HieuPahm 💌</h2>
+          <p id="sendNote"></p>
+        </div>
+        <div class="send">
+          <div class="stat" id="sendStat" role="status"></div>
+          <div class="fb" id="sendFb" hidden>
+            <textarea
+              id="sendText"
+              readonly
+              aria-label="Nội dung để gửi"
+            ></textarea>
+            <div class="row2">
+              <button class="btn" id="sendCopy">Sao chép nội dung</button
+              ><button class="btn" id="sendShare" hidden>Chia sẻ</button
+              ><a
+                class="btn ghost"
+                id="sendFbLink"
+                target="_blank"
+                rel="noopener"
+                >Mở Facebook</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="foot">
+        <h3 id="footTitle"></h3>
+        <p id="footText"></p>
+        <p id="footLink"></p>
+        <button class="btn" id="replayBtn">Xem lại từ đầu</button>
+      </div>
+    </main>
+
+    <audio id="bgm" loop preload="auto"></audio>
+    <div id="cur" aria-hidden="true">
+      <svg class="star" viewBox="0 0 30 30">
+        <path
+          d="M15 2l3.6 8.2 8.9.8-6.7 5.9 2 8.7L15 21l-7.8 4.6 2-8.7L2.5 11l8.9-.8z"
+          fill="#ffd66b"
+          stroke="#fff6cf"
+          stroke-width="1.2"
+          stroke-linejoin="round"
+        />
+      </svg>
+      <svg class="heart" viewBox="0 0 30 30">
+        <path
+          d="M15 26S3 18.5 3 10.5C3 6.6 6 4 9.3 4c2.4 0 4.3 1.3 5.7 3.4C16.4 5.3 18.3 4 20.7 4 24 4 27 6.6 27 10.5 27 18.5 15 26 15 26z"
+          fill="#ff6fb1"
+          stroke="#ffe0ef"
+          stroke-width="1.2"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </div>
+    <div class="overlay" id="overlay" hidden>
+      <div
+        class="dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="dlgName"
+      >
+        <h3 id="dlgName"></h3>
+        <div class="pr" id="dlgPrice"></div>
+        <p class="how" id="dlgHow"></p>
+        <div class="row">
+          <input
+            id="dlgContact"
+            type="text"
+            readonly
+            aria-label="Cách liên hệ để đặt hàng"
+          /><button class="btn" id="dlgCopy">Sao chép</button>
+        </div>
+        <a id="dlgLink" href="#" target="_blank" rel="noopener" hidden
+          >Mở trang liên hệ</a
+        >
+        <button class="btn pink" id="dlgClose">Đóng</button>
+      </div>
+    </div>
+    <div class="overlay" id="lightbox" hidden>
+      <div class="lb">
+        <img id="lbImg" alt="Ảnh phóng to" /><button
+          class="btn pink"
+          id="lbClose"
+        >
+          Đóng
+        </button>
+      </div>
+    </div>
+    <div class="toast" id="toast" role="status" hidden></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
