@@ -190,6 +190,7 @@ if (!fine) {
   } catch (e) {}
 }
 let RUN = 0;
+let currentScene = -1;
 const ABORT = { abort: true };
 const guard = (id) => {
   if (id !== RUN) throw ABORT;
@@ -889,7 +890,7 @@ function setDot(n) {
     d.classList.toggle("on", k <= n);
     d.classList.toggle("now", k === n);
   });
-  if (n >= 2) $("#skipBtn").classList.add("show");
+  $("#skipBtn").classList.add("show");
 }
 function center(el) {
   const r = el.getBoundingClientRect();
@@ -912,6 +913,7 @@ function reset() {
   $("#finalBg").hidden = true;
   document.documentElement.classList.add("story");
   $("#skipBtn").classList.remove("show");
+  currentScene = -1;
   dotsEl.querySelectorAll("i").forEach((d) => d.classList.remove("on", "now"));
 }
 const S = CONFIG.say;
@@ -2345,6 +2347,13 @@ async function runPre(id) {
 
 /* ---------- Chạy ---------- */
 const SCENES = [s0, s1, s2, s3, s4, s5, s6, s7];
+async function runScenes(id, from) {
+  for (let i = from; i < SCENES.length; i++) {
+    currentScene = i;
+    await SCENES[i](id);
+    guard(id);
+  }
+}
 async function start(replay) {
   const id = ++RUN;
   reset();
@@ -2355,21 +2364,26 @@ async function start(replay) {
       return;
     }
     guard(id);
-    for (let i = 0; i < SCENES.length; i++) {
-      await SCENES[i](id);
-      guard(id);
-    }
+    await runScenes(id, 0);
   } catch (e) {
     if (e !== ABORT) console.error(e);
   }
 }
 $("#skipBtn").addEventListener("click", async (e) => {
   e.stopPropagation();
-  RUN++;
+  const nextScene = currentScene + 1;
+  const id = ++RUN;
+  $("#skipBtn").classList.remove("show");
   actClear();
   decoClear();
   lineEl.textContent = "";
-  await enterFinal();
+  grass(false);
+  try {
+    if (nextScene >= SCENES.length) await enterFinal();
+    else await runScenes(id, nextScene);
+  } catch (error) {
+    if (error !== ABORT) console.error(error);
+  }
 });
 $("#skipBtn").addEventListener("pointerdown", (e) => e.stopPropagation());
 $("#replayBtn").addEventListener("click", () => {
